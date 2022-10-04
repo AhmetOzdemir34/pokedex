@@ -13,12 +13,12 @@ const routes: Array<RouteConfig> = [
   {
     path: '/favs',
     name: 'favs',
-    component: () => import(/* webpackChunkName: "about" */ '../views/FavsView.vue')
+    component: () => import('../views/FavsView.vue')
   },
   {
     path: '/pokemon/:name',
     name: 'pokemon',
-    component: () => import(/* webpackChunkName: "about" */ '../views/PokemonView.vue')
+    component: () => import('../views/PokemonView.vue')
   },
 ]
 
