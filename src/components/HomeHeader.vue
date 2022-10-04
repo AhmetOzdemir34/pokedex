@@ -2,7 +2,7 @@
     <div>
         <img src="../assets/images/pokemon.png" class="css-img" alt="POKEDEX" />
         <div class="animation">
-            <form style="max-width:70%;" class="mx-auto" @submit.prevent="">
+            <form style="max-width:70%;" class="mx-auto" @submit.prevent="searching">
             <input v-model="search" type="text" class="css-input" placeholder="Pokemon name or ID">
             <button type="submit" class="css-btn fa-solid fa-magnifying-glass"
             :class="{'light-text':!getMode}"
@@ -42,6 +42,7 @@
 
 <script lang="ts">
     import { mainStore } from '@/store/main.module';
+import axios from 'axios';
 import { Component, Vue } from 'vue-property-decorator';
 import HomePokemons from './HomePokemons.vue';
 
@@ -65,6 +66,9 @@ import HomePokemons from './HomePokemons.vue';
         }
         reset(): void{
           mainStore.reset;
+        }
+        async searching(){
+          console.log(this.search);
         }
     }
 </script>
