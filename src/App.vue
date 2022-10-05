@@ -38,6 +38,9 @@
   box-sizing: border-box;
   font-family: 'Nunito', sans-serif;
 }
+.ml-2{
+  margin-left: 1rem;
+}
 .mt-2rem{
   margin-top: 2rem;
 }

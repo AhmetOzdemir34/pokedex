@@ -3,7 +3,7 @@
         <img src="../assets/images/pokemon.png" class="css-img" alt="POKEDEX" />
         <div class="animation">
             <form style="max-width:70%;" class="mx-auto" @submit.prevent="searching">
-            <input v-model="search" type="text" class="css-input" placeholder="Pokemon name or ID">
+            <input v-model.trim="search" @input="searching" type="text" class="css-input" placeholder="Pokemon name or ID">
             <button type="submit" class="css-btn fa-solid fa-magnifying-glass"
             :class="{'light-text':!getMode}"
             ></button>
@@ -42,15 +42,17 @@
 
 <script lang="ts">
     import { mainStore } from '@/store/main.module';
-import axios from 'axios';
-import { Component, Vue } from 'vue-property-decorator';
-import HomePokemons from './HomePokemons.vue';
+    import { Pokemons } from '@/types';
+    import axios from 'axios';
+    import { Component, Vue } from 'vue-property-decorator';
+    import HomePokemons from './HomePokemons.vue';
 
     @Component({
       components: {HomePokemons}
     })
     export default class  extends Vue {
         search= "" as string
+        results= [] as Pokemons[];
 
         get getMode(){
           return mainStore.lightMode;
@@ -67,8 +69,12 @@ import HomePokemons from './HomePokemons.vue';
         reset(): void{
           mainStore.reset;
         }
-        async searching(){
-          console.log(this.search);
+        searching(e:any){
+          //pokemon ara
+          /* if(!e.target.value){
+            mainStore.setResults(false);
+          } */
+          mainStore.searching(e.target.value);
         }
     }
 </script>
@@ -78,6 +84,10 @@ import HomePokemons from './HomePokemons.vue';
   font-size: 32px;
   border: 0;
   background-color: transparent;
+}
+.result-card{
+  border: 1px solid black;
+  border-radius: 5px;
 }
 .css-img{
     display: block;

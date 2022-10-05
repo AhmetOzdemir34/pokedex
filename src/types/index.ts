@@ -5,7 +5,8 @@ export interface Pokemons {
     weight:number,
     imageUrl: string,
     base_experience: number,
-    favourite:boolean
+    favourite:boolean,
+    moves: any[]
 }
 export interface PokemonDetail {
     id: number,
