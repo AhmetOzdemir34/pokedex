@@ -1,30 +1,29 @@
 <template>
-    <div class="back">
-        <div class="text-center">
+    <div style="z-index: 1;" class="back flex flex-col flex-nowrap justify-center items-center" :class="[getMode?'lightModeLocal':'darkModeLocal']">
+        <div class="h-33 text-center">
             <p style="font-size: 36px;">{{pokemon.height}}</p>
             <p style="font-size:18px;">HEIGHT</p>
         </div>
-        <div class="text-center">
+        <div class="h-33 text-center">
             <p style="font-size: 36px;">{{pokemon.weight}}</p>
             <p style="font-size:18px;">WEIGHT</p>
         </div>
-        <div style="width:100%; height:100%; padding-top:1.5rem;">
+        <div class="h-33">
             <div class="dropdown">
-                <button class="btn">Details</button>
-                <div class="dropdown-content">
+                <div style="z-index: 2 !important;" class="dropdown-content">
                     <div @click="oModal(pokemon)">with Modal</div>
                     <div @click="oNav(pokemon)">with Drawer</div>
                     <router-link :to="getUrl(pokemon.name)">with Page</router-link>
                 </div>
+                <button class="btn">Details</button>
             </div>
-            <button v-if="pokemon.favourite" class="btn icon i-like fa-solid fa-thumbs-down"></button>
-            <button v-else class="btn fa-solid fa-thumbs-up icon i-dislike"></button>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-    import { Pokemons } from '@/types';
+    import { mainStore } from '@/store/main.module';
+import { Pokemons } from '@/types';
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
     @Component
@@ -45,13 +44,27 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
         oNav(data:Pokemons) {
             this.$emit('oNav', data);
         }
+        get getMode():boolean{
+        return mainStore.lightMode;
+        }
     }
 </script>
 
 <style scoped>
+    .lightModeLocal{
+        background-color: #e3b2008b !important;
+        color: black !important;
+    }
+    .darkModeLocal{
+        background-color: rgba(255, 255, 255, 0.8) !important;
+        color: #2d2d2df8 !important;
+    }
 .dropdown {
   position: relative;
   display: inline-block;
+}
+.h-33{
+    height: 50%;
 }
 .dropdown-content {
   display: none;
@@ -75,7 +88,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
     margin: 5px;
     position: absolute;
     width: 100%;
-    height: 100%;
+    height: 100% !important;
     backface-visibility: hidden;
     background: #fafafa;
     color: #333;
@@ -91,10 +104,11 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
     color: white;
 }
 .btn{
-    width: 100%;
-    padding: 6px;
+    width: 100px;
+    padding: 10px;
     margin: 2px 0;
     border: 0;
+    border-radius: 5px;
     cursor: pointer;
     transition: .5s all ease;
 }
