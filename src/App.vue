@@ -1,12 +1,13 @@
 <template>
   <div id="app" style="min-height:100vh"
-  :class="[getMode?'light light-text':'dark dark-text']">
+  :class="[getMode?'lightMode':'darkMode']">
     <nav class="container text-center py-2">
-      <router-link class="mx-2" :class="{'light-text':!getMode}" to="/">Home</router-link>
-      <router-link class="mx-2" :class="{'light-text':!getMode}" to="/favs">Favs</router-link>
+      <router-link class="mx-2" :class="[getMode?'lightMode':'darkMode']" to="/">Home</router-link>
+      <router-link class="mx-2" :class="[getMode?'lightMode':'darkMode']" to="/favs">Favs</router-link>
+      <button class="mx-2" :class="{'light-text':!getMode}" @click="logout">Logout</button>
       <button 
         class="fa-solid btn-mode"
-        :class="[getMode ? 'fa-sun':'fa-moon light-text']"
+        :class="[getMode ? 'fa-sun lightMode':'fa-moon darkMode']"
         @click="toggle"
         >
       </button>
@@ -16,17 +17,25 @@
 </template>
 
 <script lang="ts">
+  import { getAuth, signOut } from '@firebase/auth';
   import { Component, Vue } from 'vue-property-decorator';  
   import { mainStore } from "./store/main.module";
-
+  
   @Component
-  export default class  extends Vue {
+  export default class extends Vue {
       
+
     get getMode():boolean{
       return mainStore.lightMode;
     }
     toggle(){
       mainStore.toggleMode();
+    }
+    logout(){
+      const auth = getAuth();
+      signOut(auth).then(()=>{
+        this.$router.push({name:"login"});
+      })
     }
   }
 </script>
@@ -47,22 +56,21 @@
 .bg-transparent{
   background-color: transparent;
 }
+.h-full{
+  height: 100%;
+}
 .relative{
   position: relative;
   width: 100%;
   height: 100%;
 }
-.light{
-  background: #f9f9f9 !important;
+.lightMode{
+  background-color: #f3f3f3 !important;
+  color: rgb(20,20,20) !important;
 }
-.light-text{
-  color: grey !important;
-}
-.dark{
-  background: rgb(41, 41, 41) !important;
-}
-.dark-text{
-  color: rgb(195, 195, 195) !important;
+.darkMode{
+  background-color: rgb(20,20,20) !important;
+  color: #f3f3f3 !important;
 }
 .container{
   max-width: 1080px;
@@ -100,14 +108,29 @@
 .flex-wrap{
   flex-wrap: wrap;
 }
+.flex-nowrap{
+  flex-wrap: nowrap;
+}
+.justify-center{
+  justify-content: center;
+}
 .flex-row{
   flex-direction: row;
+}
+.flex-col{
+  flex-direction: column;
 }
 .items-center{
   align-items: center;
 }
-.justify-beetwee{
+.justify-beetween{
   justify-content: space-between;
+}
+.justify-start{
+  justify-content: flex-start;
+}
+.items-start{
+  align-items: flex-start;
 }
 .p-2{
   padding: 5px;
