@@ -44,6 +44,7 @@
 
 <script lang="ts">
     import { PokemonDetail } from '@/types';
+import { getAuth } from '@firebase/auth';
 import axios from 'axios';
 import { Component, Vue } from 'vue-property-decorator';
 
@@ -52,6 +53,10 @@ import { Component, Vue } from 'vue-property-decorator';
         pokemon = {} as PokemonDetail;
 
         async created(){
+            const auth = getAuth();
+            if(!auth.currentUser){
+                this.$router.push({name:"login"})
+            }
             const {data} = await axios.get(`https://pokeapi.co/api/v2/pokemon/`+this.$route.params.name);
             this.pokemon = {
                 id: data.id,

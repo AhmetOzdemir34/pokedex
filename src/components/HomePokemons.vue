@@ -93,15 +93,22 @@
             }
         }
         get getPermission(){
-            if(mainStore.getResults.length===0 && mainStore.getResults2.length===0){
+            /* if(mainStore.getResults!.length>0 && mainStore.getResults2!.length>0){
                 return true
             }
-            return false;
+            return false; */
+            return mainStore.getPermission;
         }
         get getResults() :Pokemons[]{
+            if(!mainStore.getResults){
+                return [];
+            }
             return mainStore.getResults;
         }
         get getResults2() :Pokemons[]{
+            if(!mainStore.getResults2){
+                return [];
+            }
             return mainStore.getResults2;
         }
         get getPokemons() :Pokemons[]{
