@@ -27,3 +27,10 @@ export interface PokemonDetail {
     }[],
     moves: any[]
 }
+export interface FavPokemons {
+    id: number,
+    name: string,
+    height:number,
+    weight:number,
+    imageUrl: string,
+}
