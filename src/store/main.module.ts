@@ -11,23 +11,30 @@ import { store } from "./index";
 export default class PokemonModule extends VuexModule {
     pokemons: Pokemons[] = []
     lightMode = true as boolean
-    results: Pokemons[] = [] //pokemon results
-    results2: Pokemons[] = [] //moves results
-
+    results: Pokemons[] |null = null //pokemon results
+    results2: Pokemons[] |null = null //moves results
+    
     get getPokemons() : Pokemons[]{
         return this.pokemons;   
     }
+    get getPermission(){
+        if(this.getResults && this.getResults2){
+            return false;
+        }
+        return true
+    }
     get getResults(){
+        if(!mainStore.results || mainStore.results.length==0){
+            return null;
+        }
         return this.results;
     }
     get getResults2(){
+        if(!mainStore.results2 || mainStore.results2.length==0){
+            return null;
+        }
         return this.results2;
     }
-    /* set setResults(data:any | boolean){
-        if(!data){
-            this.results = data;
-        }
-    } */
     get getMode() : boolean {
         return this.lightMode;
     }
