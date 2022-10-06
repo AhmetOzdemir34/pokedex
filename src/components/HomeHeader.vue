@@ -20,17 +20,17 @@
                   <td>Reset</td>
                 </tr>
                 <tr>
-                  <td>
-                    <button @click="nameASC" :class="{'light-text':!getMode}" class="order-icons fa-solid fa-arrow-down-a-z"></button>
+                  <td @click="nameASC">
+                    <button :class="{'light-text':!getMode}" class="order-icons fa-solid fa-arrow-down-a-z"></button>
                   </td>
-                  <td>
-                    <button @click="weightDESC" :class="{'light-text':!getMode}" class="order-icons fa-solid fa-arrow-down-z-a"></button>
+                  <td @click="weightDESC">
+                    <button :class="{'light-text':!getMode}" class="order-icons fa-solid fa-arrow-down-z-a"></button>
                   </td>
-                  <td>
-                    <button @click="heightASC" :class="{'light-text':!getMode}" class="order-icons fa-solid fa-arrow-down-1-9"></button>
+                  <td @click="heightASC">
+                    <button :class="{'light-text':!getMode}" class="order-icons fa-solid fa-arrow-down-1-9"></button>
                   </td>
-                  <td>
-                    <button @click="reset" :class="{'light-text':!getMode}" class="order-icons fa-solid fa-power-off"></button>
+                  <td @click="reset">
+                    <button :class="{'light-text':!getMode}" class="order-icons fa-solid fa-power-off"></button>
                   </td>
                 </tr>
                 
