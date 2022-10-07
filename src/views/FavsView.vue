@@ -1,9 +1,9 @@
 <template>
-    <div>
+    <div id="rootFav">
         <div class="flex flex-row flex-wrap justify-start items-start">
             <div v-for="group,i in favsGroups" :key="i" class="group-card">
                 <div class="mini-card">
-                    <h2>{{group.name}} <span class="delete-btn" @click="deleteGroup(group.id)"><i class="fa-sharp fa-solid fa-trash"></i></span></h2>
+                    <h2 :class="[getMode?'lightModeLocal':'darkModeLocal']">{{group.name}} <span class="delete-btn" @click="deleteGroup(group.id)"><i class="fa-sharp fa-solid fa-trash"></i></span></h2>
                     <hr style="margin:12px 0;" />
                     <div v-if="group.items.length>0" class="card-keeper">
                         <div v-for="item,i in group.items" :key="i" class="item">
@@ -22,9 +22,10 @@
 
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
-    import { getDoc, collection, getDocs, QuerySnapshot, doc, updateDoc, deleteField, deleteDoc } from "firebase/firestore";
+    import { collection, getDocs, doc, updateDoc, deleteDoc } from "firebase/firestore";
     import { db } from '@/main';
     import { getAuth, onAuthStateChanged } from '@firebase/auth';
+import { mainStore } from '@/store/main.module';
 
     
     @Component
@@ -53,6 +54,9 @@
                 }
             });
         }
+        get getMode():boolean{
+            return mainStore.lightMode;
+        }
         async deleteGroup(id:string){
             await deleteDoc(doc(db, "favourites", id));
             this.favsGroups = this.favsGroups.filter((e)=> e.id!==id);
@@ -75,6 +79,31 @@
 .group-card{
     width: 25%;
     padding: 10px;
+}
+.lightModeLocal{
+    color: #333;
+}
+.darkModeLocal{
+    color: #333;
+}
+#rootFav{
+    max-width: 1080px;
+    margin: 0 auto;
+}
+@media(max-width:900px){
+    .group-card{
+    width: 33%;
+}
+}
+@media(max-width:700px){
+    .group-card{
+    width: 50%;
+}
+}
+@media(max-width:500px){
+    .group-card{
+    width: 100%;
+}
 }
 .delete-btn{
     color: rgb(229, 172, 172);
