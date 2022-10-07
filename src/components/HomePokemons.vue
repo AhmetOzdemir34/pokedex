@@ -1,6 +1,19 @@
 <template>
     <div>
-        <div v-if="getPermission" class="flex flex-row flex-wrap items-center">
+        <div v-if="getFiltered.length>0" class="flex flex-row flex-wrap items-center">
+            <div v-for="pokemon,i in getFiltered" :key="i" class="pokemon-card">
+                <div class="relative">
+                    <div class="card">
+                        <FrontCard :pokemon="pokemon"/>
+                        <BackCard  :pokemon="pokemon" :drawerPokemon="drawerPokemon" 
+                        :modalPokemon="modalPokemon" 
+                        @oModal="openModal($event)" @oNav="openNav($event)"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div v-else>
+        <div v-if="getPokemons.length>0 && getResults.length===0" class="flex flex-row flex-wrap items-center">
             <div v-for="pokemon,i in getPokemons" :key="i" class="pokemon-card">
                 <div class="relative">
                     <div class="card">
@@ -13,31 +26,52 @@
             </div>
         </div>
         <div v-else>
-            <div class="flex flex-row flex-wrap items-center">
-                <div v-for="pokemon,i in getResults" :key="i" class="pokemon-card">
-                    <div class="relative">
-                        <div class="card">
-                            <FrontCard :pokemon="pokemon"/>
-                            <BackCard  :pokemon="pokemon" :drawerPokemon="drawerPokemon" 
-                            :modalPokemon="modalPokemon" 
-                            @oModal="openModal($event)" @oNav="openNav($event)"/>
+            <div v-if="getSpecies.length>0">
+                <h2 class="text-center">Species Results</h2>
+                <div class="flex flex-row flex-wrap items-center">
+                    <div v-for="pokemon,i in getSpecies" :key="i" class="pokemon-card">
+                        <div class="relative">
+                            <div class="card">
+                                <FrontCard :pokemon="pokemon"/>
+                                <BackCard  :pokemon="pokemon" :drawerPokemon="drawerPokemon" 
+                                :modalPokemon="modalPokemon" 
+                                @oModal="openModal($event)" @oNav="openNav($event)"/>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <h2 class="ml-2">Moves</h2>
-            <div class="flex flex-row flex-wrap items-center">
-                <div v-for="pokemon,i in getResults2" :key="i" class="pokemon-card">
-                    <div class="relative">
-                        <div class="card">
-                            <FrontCard :pokemon="pokemon"/>
-                            <BackCard  :pokemon="pokemon" :drawerPokemon="drawerPokemon" 
-                            :modalPokemon="modalPokemon" 
-                            @oModal="openModal($event)" @oNav="openNav($event)"/>
+            <div v-if="getMoves.length>0">
+                <h2 class="text-center">Moves Results</h2>
+                <div class="flex flex-row flex-wrap items-center">
+                    <div v-for="pokemon,i in getMoves" :key="i" class="pokemon-card">
+                        <div class="relative">
+                            <div class="card">
+                                <FrontCard :pokemon="pokemon"/>
+                                <BackCard  :pokemon="pokemon" :drawerPokemon="drawerPokemon" 
+                                :modalPokemon="modalPokemon" 
+                                @oModal="openModal($event)" @oNav="openNav($event)"/>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div v-if="getResults.length>0">
+                <h2 class="text-center">Pokemon Results</h2>
+                <div class="flex flex-row flex-wrap items-center">
+                    <div v-for="pokemon,i in getResults" :key="i" class="pokemon-card">
+                        <div class="relative">
+                            <div class="card">
+                                <FrontCard :pokemon="pokemon"/>
+                                <BackCard  :pokemon="pokemon" :drawerPokemon="drawerPokemon" 
+                                :modalPokemon="modalPokemon" 
+                                @oModal="openModal($event)" @oNav="openNav($event)"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
         <HomeDrawer :drawerPokemon="drawerPokemon"/>
         <HomeModal :modalPokemon="modalPokemon"
@@ -71,14 +105,10 @@
         drawerPokemon = {} as Pokemons;
 
         async created(){
-            if(mainStore.getPokemons.length===0){                
-                const storage: number[] = JSON.parse(localStorage.getItem('pokemons') as string) || [];
+            if(mainStore.getPokemons.length===0){
                 
-               const promiseList =  Array.from({length:700}).map((_,i) => 
-                    axios.get(`https://pokeapi.co/api/v2/pokemon/${i+1}`)
-                )
-                const dataList = await Promise.all(promiseList);
-                dataList.forEach(({data}) => {
+                for(let i=1;i<=500;i++){
+                    const {data} = await axios.get('https://pokeapi.co/api/v2/pokemon/'+i);
                     mainStore.addPokemons({
                         id:data.id,
                         name: data.name,
@@ -86,30 +116,23 @@
                         weight: data.weight,
                         base_experience: data.base_experience,
                         imageUrl:data.sprites.other.dream_world.front_default,
-                        favourite: storage.some(e => e === data.id),
-                        moves: data.moves
+                        moves: data.moves,
+                        species: {name: data.species.name}
                     });
-                })
+                }
             }
         }
-        get getPermission(){
-            /* if(mainStore.getResults!.length>0 && mainStore.getResults2!.length>0){
-                return true
-            }
-            return false; */
-            return mainStore.getPermission;
-        }
-        get getResults() :Pokemons[]{
-            if(!mainStore.getResults){
-                return [];
-            }
+        get getResults() :Pokemons[]{            
             return mainStore.getResults;
         }
-        get getResults2() :Pokemons[]{
-            if(!mainStore.getResults2){
-                return [];
-            }
-            return mainStore.getResults2;
+        get getFiltered() :Pokemons[]{
+            return mainStore.getFiltered;
+        }
+        get getSpecies() : Pokemons[]{
+            return mainStore.getSpecies;
+        }
+        get getMoves() : Pokemons[]{
+            return mainStore.getMoves;
         }
         get getPokemons() :Pokemons[]{
             return mainStore.getPokemons;
