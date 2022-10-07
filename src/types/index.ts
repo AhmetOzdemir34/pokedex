@@ -5,8 +5,15 @@ export interface Pokemons {
     weight:number,
     imageUrl: string,
     base_experience: number,
-    favourite:boolean,
-    moves: any[]
+    moves: {
+        move:{
+            name:string,
+        },
+        version_group_details: any[]
+    }[],
+    species: {
+        name:string
+    }
 }
 export interface PokemonDetail {
     id: number,
