@@ -3,9 +3,9 @@
         <img src="../assets/images/pokemon.png" class="css-img" alt="POKEDEX" />
         <div class="animation">
             <form style="max-width:70%;" class="mx-auto" @submit.prevent="searching">
-            <input v-model.trim="search" @input="searching" type="text" class="css-input" placeholder="Pokemon name or ID">
+            <input v-model.trim="search" type="text" @input="clearMoves" class="css-input" placeholder="Pokemon name or ID">
             <button type="submit" class="css-btn fa-solid fa-magnifying-glass"
-            :class="{'light-text':!getMode}"
+            :class="[getMode?'lightModeLocal':'darkModeLocal']"
             ></button>
             </form>
         </div>
@@ -20,17 +20,20 @@
                   <td>Reset</td>
                 </tr>
                 <tr>
-                  <td @click="nameASC">
-                    <button :class="{'light-text':!getMode}" class="order-icons fa-solid fa-arrow-down-a-z"></button>
+                  <td>
+                    <button @click="nameASC" :class="[getMode?'lightModeLocal':'darkModeLocal']" class="order-icons fa-solid fa-arrow-down-a-z mx-1"></button>
+                    <button @click="nameDESC" :class="[getMode?'lightModeLocal':'darkModeLocal']" class="order-icons fa-solid fa-arrow-down-z-a mx-1"></button>
                   </td>
-                  <td @click="weightDESC">
-                    <button :class="{'light-text':!getMode}" class="order-icons fa-solid fa-arrow-down-z-a"></button>
+                  <td>
+                    <button @click="weightASC" :class="[getMode?'lightModeLocal':'darkModeLocal']" class="order-icons fa-solid fa-arrow-down-1-9 mx-1"></button>
+                    <button @click="weightDESC" :class="[getMode?'lightModeLocal':'darkModeLocal']" class="order-icons fa-solid fa-arrow-down-9-1 mx-1"></button>
                   </td>
-                  <td @click="heightASC">
-                    <button :class="{'light-text':!getMode}" class="order-icons fa-solid fa-arrow-down-1-9"></button>
+                  <td>
+                    <button @click="heightASC" :class="[getMode?'lightModeLocal':'darkModeLocal']" class="order-icons fa-solid fa-arrow-down-1-9 mx-1"></button>
+                    <button @click="heightDESC" :class="[getMode?'lightModeLocal':'darkModeLocal']" class="order-icons fa-solid fa-arrow-down-9-1 mx-1"></button>
                   </td>
-                  <td @click="reset">
-                    <button :class="{'light-text':!getMode}" class="order-icons fa-solid fa-power-off"></button>
+                  <td>
+                    <button @click="reset" :class="[getMode?'lightModeLocal':'darkModeLocal']" class="order-icons fa-solid fa-power-off"></button>
                   </td>
                 </tr>
                 
@@ -43,7 +46,6 @@
 <script lang="ts">
     import { mainStore } from '@/store/main.module';
     import { Pokemons } from '@/types';
-    import axios from 'axios';
     import { Component, Vue } from 'vue-property-decorator';
     import HomePokemons from './HomePokemons.vue';
 
@@ -53,29 +55,38 @@
     export default class  extends Vue {
         search= "" as string
         results= [] as Pokemons[];
+        filtered = [] as Pokemons[];
 
         get getMode(){
           return mainStore.lightMode;
         }
+        clearMoves(){
+          mainStore.clearMoves();
+        }
         nameASC(): void{
-          mainStore.nameASC;
+          mainStore.nameASC();
+        }
+        nameDESC(): void{
+          mainStore.nameDESC();
         }
         heightASC(): void{
-          mainStore.heightASC;
+          mainStore.heightASC();
+        }
+        heightDESC(): void{
+          mainStore.heightDESC();
+        }
+        weightASC(): void{
+          mainStore.weightASC();
         }
         weightDESC(): void{
-          mainStore.weightDESC;
+          mainStore.weightDESC();
         }
         reset(): void{
-          mainStore.reset;
+          mainStore.reset();
         }
-        searching(e:any){
-          //pokemon ara
-          /* if(!e.target.value){
-            mainStore.setResults(false);
-          } */
-          mainStore.searching(e.target.value);
-        }
+        searching(){
+          mainStore.searching(this.search);
+        } 
     }
 </script>
 
@@ -84,6 +95,15 @@
   font-size: 32px;
   border: 0;
   background-color: transparent;
+}
+.lightModeLocal{
+  color: #333;
+}
+.darkModeLocal{
+  color: #f2f2f2;
+}
+td button{
+  cursor: pointer;
 }
 .result-card{
   border: 1px solid black;
@@ -96,6 +116,9 @@
   }
   .animation{
     animation: initAnimation 2s;
+  }
+  .mx-1{
+    margin: 0 3px;
   }
   .css-input{
     padding: 10px;
