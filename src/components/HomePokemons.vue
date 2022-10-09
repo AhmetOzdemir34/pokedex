@@ -27,7 +27,7 @@
         </div>
         <div v-else>
             <div v-if="getSpecies.length>0">
-                <h2 class="text-center">Species Results</h2>
+                <h2 class="text-center">{{$t("homePokemons.speciesResults")}}</h2>
                 <div class="flex flex-row flex-wrap items-center">
                     <div v-for="pokemon,i in getSpecies" :key="i" class="pokemon-card">
                         <div class="relative">
@@ -42,7 +42,7 @@
                 </div>
             </div>
             <div v-if="getMoves.length>0">
-                <h2 class="text-center">Moves Results</h2>
+                <h2 class="text-center">{{$t("homePokemons.movesResults")}}</h2>
                 <div class="flex flex-row flex-wrap items-center">
                     <div v-for="pokemon,i in getMoves" :key="i" class="pokemon-card">
                         <div class="relative">
@@ -57,7 +57,7 @@
                 </div>
             </div>
             <div v-if="getResults.length>0">
-                <h2 class="text-center">Pokemon Results</h2>
+                <h2 class="text-center">{{$t("homePokemons.pokemonResults")}}</h2>
                 <div class="flex flex-row flex-wrap items-center">
                     <div v-for="pokemon,i in getResults" :key="i" class="pokemon-card">
                         <div class="relative">
@@ -106,19 +106,22 @@
 
         async created(){
             if(mainStore.getPokemons.length===0){
-                
-                for(let i=1;i<=500;i++){
-                    const {data} = await axios.get('https://pokeapi.co/api/v2/pokemon/'+i);
-                    mainStore.addPokemons({
-                        id:data.id,
-                        name: data.name,
-                        height: data.height,
-                        weight: data.weight,
-                        base_experience: data.base_experience,
-                        imageUrl:data.sprites.other.dream_world.front_default,
-                        moves: data.moves,
-                        species: {name: data.species.name}
-                    });
+                try{
+                    for(let i=1;i<=500;i++){
+                        const {data} = await axios.get('https://pokeapi.co/api/v2/pokemon/'+i);
+                        mainStore.addPokemons({
+                            id:data.id,
+                            name: data.name,
+                            height: data.height,
+                            weight: data.weight,
+                            base_experience: data.base_experience,
+                            imageUrl:data.sprites.other.dream_world.front_default,
+                            moves: data.moves,
+                            species: {name: data.species.name}
+                        });
+                    }
+                }catch(err: any){
+                    alert(`Hata Tanımı: ${err.message}\nLütfen sayfayı yenileyiniz.`);
                 }
             }
         }

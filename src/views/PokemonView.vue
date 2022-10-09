@@ -10,23 +10,23 @@
         <div id="part2">
             <div>
                 <p style="font-size: 48px;font-style: italic;">{{pokemon.height}}</p>
-                <p style="font-weight:bolder;">HEIGHT</p>
+                <p style="font-weight:bolder;">{{$t("common.height")}}</p>
             </div>
             <div>
                 <p style="font-size: 48px;font-style: italic;">{{pokemon.weight}}</p>
-                <p style="font-weight:bolder;">WEIGHT</p>
+                <p style="font-weight:bolder;">{{$t("common.weight")}}</p>
             </div>
             <div>
                 <p style="font-size: 48px;font-style: italic;">{{pokemon.base_experience}}</p>
-                <p style="font-weight:bolder;">BASE_EXP</p>
+                <p style="font-weight:bolder;">{{$t("common.xp")}}</p>
             </div>
         </div>
         <div id="part3">
-            <h3 class="moves">Moves</h3> <br>
+            <h3 class="moves">{{$t("pokemonView.moves")}}</h3> <br>
             <div class="move" v-for="move,i in pokemon.moves" :key="i">
                 {{move.move.name}}
             </div>
-            <h3 style="margin-top:4rem;">Stats</h3> <br>
+            <h3 style="margin-top:4rem;">{{$t("pokemonView.stats")}}</h3> <br>
             <table style="width:100%;">
                 <tbody>
                     <tr v-for="stat,i in pokemon.stats" :key="i">
@@ -57,18 +57,21 @@ import { Component, Vue } from 'vue-property-decorator';
             if(!auth.currentUser){
                 this.$router.push({name:"login"})
             }
-            const {data} = await axios.get(`https://pokeapi.co/api/v2/pokemon/`+this.$route.params.name);
-            this.pokemon = {
-                id: data.id,
-                name: data.name,
-                height: data.height,
-                weight: data.weight,
-                Img2: data.sprites.other["official-artwork"].front_default,
-                Img3: data.sprites.other.dream_world.front_default,
-                Img1: data.sprites.other.home.front_default,
-                base_experience: data.base_experience,
-                stats: data.stats,
-                moves: data.moves
+            try{
+                const {data} = await axios.get(`https://pokeapi.co/api/v2/pokemon/`+this.$route.params.name);
+                this.pokemon = {
+                    id: data.id,
+                    name: data.name,
+                    height: data.height,
+                    weight: data.weight,
+                    Img2: data.sprites.other["official-artwork"].front_default,
+                    Img3: data.sprites.other.dream_world.front_default,
+                    Img1: data.sprites.other.home.front_default,
+                    base_experience: data.base_experience,
+                    stats: data.stats,
+                    moves: data.moves
+            }}catch(err:any){
+                alert(`Hata Tanımı: ${err.message}\nBöyle bir pokemon yok!`);
             }
         }
     }

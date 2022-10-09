@@ -2,9 +2,13 @@
   <div id="app" style="min-height:100vh"
   :class="[getMode?'lightMode':'darkMode']">
     <nav class="container text-center py-2">
-      <router-link class="mx-2" :class="[getMode?'lightMode':'darkMode']" to="/">Home</router-link>
-      <router-link class="mx-2" :class="[getMode?'lightMode':'darkMode']" to="/favs">Favs</router-link>
-      <button class="mx-2" :class="{'light-text':!getMode}" @click="logout">Logout</button>
+      <router-link class="mx-2" :class="[getMode?'lightMode':'darkMode']" to="/">{{$t("nav.home")}}</router-link>
+      <router-link class="mx-2" :class="[getMode?'lightMode':'darkMode']" to="/favs">{{$t("nav.favs")}}</router-link>
+      <button class="mx-2" :class="{'light-text':!getMode}" @click="logout">{{$t("nav.logout")}}</button>
+      <select @change="changeLanguage">
+        <option selected value="en">🇺🇸 ENG</option>
+        <option value="tr">🇹🇷 TUR</option>
+      </select>
       <button 
         class="fa-solid btn-mode"
         :class="[getMode ? 'fa-sun lightMode':'fa-moon darkMode']"
@@ -12,6 +16,7 @@
         >
       </button>
     </nav>
+    {{ $t("message.hello") }}
     <router-view/>
   </div>
 </template>
@@ -20,13 +25,15 @@
   import { getAuth, signOut } from '@firebase/auth';
   import { Component, Vue } from 'vue-property-decorator';  
   import { mainStore } from "./store/main.module";
-  
+  import {i18n} from './locales'
   @Component
   export default class extends Vue {
       
-
     get getMode():boolean{
       return mainStore.lightMode;
+    }
+    changeLanguage(event:any){
+      i18n.locale = event.target.value;
     }
     toggle(){
       mainStore.toggleMode();
@@ -35,6 +42,8 @@
       const auth = getAuth();
       signOut(auth).then(()=>{
         this.$router.push({name:"login"});
+      }).catch((err)=>{
+        alert(`Oturum Hata Tanımı: ${err.message}\nTekrar deneyiniz.`);
       })
     }
   }

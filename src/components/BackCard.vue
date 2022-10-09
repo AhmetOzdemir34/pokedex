@@ -2,20 +2,26 @@
     <div style="z-index: 1;" class="back flex flex-col flex-nowrap justify-center items-center" :class="[getMode?'lightModeLocal':'darkModeLocal']">
         <div class="h-33 text-center">
             <p style="font-size: 36px;">{{pokemon.height}}</p>
-            <p style="font-size:18px;">HEIGHT</p>
+            <p style="font-size:18px;">{{$t("common.height")}}</p>
         </div>
         <div class="h-33 text-center">
             <p style="font-size: 36px;">{{pokemon.weight}}</p>
-            <p style="font-size:18px;">WEIGHT</p>
+            <p style="font-size:18px;">{{$t("common.weight")}}</p>
         </div>
-        <div class="h-33">
+        <div>
             <div class="dropdown">
                 <div style="z-index: 2 !important;" class="dropdown-content">
-                    <div @click="oModal(pokemon)">with Modal</div>
-                    <div @click="oNav(pokemon)">with Drawer</div>
-                    <router-link :to="getUrl(pokemon.name)">with Page</router-link>
+                    <div @click="oModal(pokemon)">{{$t("backCard.withModal")}}</div>
+                    <div @click="oNav(pokemon)">{{$t("backCard.withDrawer")}}</div>
+                    <router-link :to="getUrl(pokemon.name)">{{$t("backCard.withPage")}}</router-link>
                 </div>
-                <button class="btn">Details</button>
+                <button class="btn">{{$t("backCard.details")}}</button>
+            </div> <br/>
+            <div class="dropdown">
+                <div style="z-index: 2 !important;" class="dropdown-content">
+                   will appear Favs groups
+                </div>
+                <button class="btn">FAVS</button>
             </div>
         </div>
     </div>
@@ -104,7 +110,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
     color: white;
 }
 .btn{
-    width: 100px;
+    width: 120px;
     padding: 10px;
     margin: 2px 0;
     border: 0;

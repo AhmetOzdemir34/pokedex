@@ -5,15 +5,15 @@
         <div class="flex flex-row flex-nowrap justify-beetween items-center">
             <div class="w-33">
                 <p style="font-size: 38px;">{{modalPokemon.base_experience}}</p>
-                <p>XP</p>
+                <p>{{$t("common.xp")}}</p>
             </div>
             <div class="w-33">
                 <p style="font-size: 38px;">{{modalPokemon.height}}</p>
-                <p>Height</p>
+                <p>{{$t("common.height")}}</p>
             </div>
             <div class="w-33">
                 <p style="font-size: 38px;">{{modalPokemon.weight}}</p>
-                <p>Weight</p>
+                <p>{{$t("common.weight")}}</p>
             </div>
         </div>
         <div class="text-center">
@@ -21,7 +21,7 @@
             <button @click="nextEmit(modalPokemon.id)" class="btn-modal fa-solid fa-chevron-right"></button>
         </div>
         <div @click="closeModal" class="pointer">
-            Close
+            {{$t("common.close")}}
         </div>
     </div>
 </template>
@@ -61,7 +61,7 @@
     display: none;
     padding: 2rem;
     position: fixed;
-    top: 30%;
+    top: 15%;
     left: 50%;
     transform: translateX(-50%);
     background: #333;
@@ -86,12 +86,8 @@
 }
 @media(max-width:700px){
     #myModal{
-        width: 60%;
-    }
-}
-@media(max-width:500px){
-    #myModal{
-        width: 90%;
+        top: 20%;
+        width: 80%;
     }
 }
 </style>

@@ -15,8 +15,9 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
     export default class  extends Vue {
         @Prop()
         pokemon !: Pokemons; 
+        
         get getMode():boolean{
-        return mainStore.lightMode;
+            return mainStore.lightMode;
         }
     }
 </script>

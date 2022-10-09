@@ -10,7 +10,7 @@
                             <img :src="item.imgUrl" :alt="item.name" class="image" />
                             <div>
                                 <p style="margin-top:14px;">{{item.name}}</p>
-                                <p class="delete-btn" @click="deleteIt(group.id, group.items, item.name)">Delete it!</p>
+                                <p class="delete-btn" @click="deleteIt(group.id, group.items, item.name)">{{$t("favsView.deleteIt")}}</p>
                             </div>
                         </div>
                     </div>
@@ -25,9 +25,8 @@
     import { collection, getDocs, doc, updateDoc, deleteDoc } from "firebase/firestore";
     import { db } from '@/main';
     import { getAuth, onAuthStateChanged } from '@firebase/auth';
-import { mainStore } from '@/store/main.module';
+    import { mainStore } from '@/store/main.module';
 
-    
     @Component
     export default class  extends Vue {
         favsGroups: {

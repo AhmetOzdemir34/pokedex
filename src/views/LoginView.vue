@@ -1,21 +1,21 @@
 <template>
     <div>
         <div v-if="isLogin" class="container">
-            <div class="text-center" style="margin:1rem 0;" @click="toggle">REGISTER NOW!!!</div>
-            <h2 class="text-center">Log in</h2>
+            <div class="text-center" style="margin:1rem 0;" @click="toggle">{{$t("loginView.loginTitle")}}</div>
+            <h2 class="text-center">{{$t("loginView.login")}}</h2>
             <div class="inputs">
-                <input type="text" v-model="email" class="inps" placeholder="username" />
-                <input type="text" v-model="password" class="inps" placeholder="password" />
-                <button type="button" class="btn" @click="signIn">Log in</button>
+                <input type="text" v-model="email" class="inps" :placeholder="getUsernamePlaceholder" />
+                <input type="password" v-model="password" class="inps" :placeholder="getPasswordPlaceholder" />
+                <button type="button" class="btn" @click="signIn">{{$t("loginView.loginButton")}}</button>
             </div>
         </div>
         <div v-else class="container">
-            <div class="text-center" style="margin:1rem 0;" @click="toggle">You have a account? Login!</div>
-            <h2 class="text-center">Register</h2>
+            <div class="text-center" style="margin:1rem 0;" @click="toggle">{{$t("loginView.registerTitle")}}</div>
+            <h2 class="text-center">{{$t("loginView.register")}}</h2>
             <div class="inputs">
-                <input type="text" v-model="email" class="inps" placeholder="username" />
-                <input type="password" v-model="password" class="inps" placeholder="password" />
-                <button type="button" class="btn" @click="register">Register</button>
+                <input type="text" v-model="email" class="inps" :placeholder="getUsernamePlaceholder" />
+                <input type="password" v-model="password" class="inps" :placeholder="getPasswordPlaceholder" />
+                <button type="button" class="btn" @click="register">{{$t("loginView.registerButton")}}</button>
             </div>
         </div>
     </div>
@@ -24,7 +24,7 @@
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
-    import { db } from '@/main';
+import { LocaleMessages } from 'vue-i18n';
 
     @Component
     export default class extends Vue {
@@ -40,7 +40,6 @@
                 }
             });
         }
-
         signIn(){
             const auth = getAuth();
             signInWithEmailAndPassword(getAuth(), this.email, this.password)
@@ -52,7 +51,6 @@
                 
             })
         }
-
         register(){
             const auth = getAuth();
             createUserWithEmailAndPassword(getAuth(), this.email, this.password)
@@ -64,9 +62,14 @@
                 
             })
         }
-
         toggle(){
             this.isLogin = !this.isLogin; 
+        }
+        get getUsernamePlaceholder():any{
+            return this.$t("loginView.username");
+        }
+        get getPasswordPlaceholder():any{
+            return this.$t("loginView.password");
         }
     }
 </script>

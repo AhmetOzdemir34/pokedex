@@ -8,7 +8,6 @@
 </template>
 
 <script lang="ts">
-import { db } from '@/main';
 import { getAuth, onAuthStateChanged } from '@firebase/auth';
 import { Component, Vue } from 'vue-property-decorator';
 import HomeHeader from "../components/HomeHeader.vue";
@@ -22,8 +21,6 @@ import HomePokemons from "../components/HomePokemons.vue";
 })
 export default class HomeView extends Vue {
   
-  
-
   auth = getAuth();
   created(){    
     onAuthStateChanged(this.auth, (user) => {
