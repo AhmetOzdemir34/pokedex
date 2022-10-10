@@ -3,7 +3,7 @@
         <img src="../assets/images/pokemon.png" class="css-img" alt="POKEDEX" />
         <div class="animation">
             <form style="max-width:70%;" class="mx-auto" @submit.prevent="searching">
-            <input v-model.trim="search" type="text" @input="clearMoves" class="css-input" placeholder="Pokemon name or ID">
+            <input v-model.trim="search" type="text" @input="clearMoves" class="css-input" :placeholder="getPlaceholder">
             <button type="submit" class="css-btn fa-solid fa-magnifying-glass"
             :class="[getMode?'lightModeLocal':'darkModeLocal']"
             ></button>
@@ -14,10 +14,10 @@
             <table class="text-center" style="width:100%">
               <tbody>
                 <tr>
-                  <td>Name</td>
-                  <td>Weight</td>
-                  <td>Height</td>
-                  <td>Reset</td>
+                  <td>{{$t("homeHeader.filters.name")}}</td>
+                  <td>{{$t("common.weight")}}</td>
+                  <td>{{$t("common.weight")}}</td>
+                  <td>{{$t("homeHeader.filters.reset")}}</td>
                 </tr>
                 <tr>
                   <td>
@@ -53,12 +53,15 @@
       components: {HomePokemons}
     })
     export default class  extends Vue {
-        search= "" as string
+        search= "";
         results= [] as Pokemons[];
         filtered = [] as Pokemons[];
 
         get getMode(){
           return mainStore.lightMode;
+        }
+        get getPlaceholder():string|undefined{
+          return String(this.$t("homeHeader.placeholder"));
         }
         clearMoves(){
           mainStore.clearMoves();

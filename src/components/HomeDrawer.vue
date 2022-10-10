@@ -3,19 +3,19 @@
         <div class="flex flex-col flex-nowrap justify-center items-center h-full">
             <img :src="drawerPokemon.imageUrl" :alt="drawerPokemon.name" style="width:100%; height:200px;">
             <h2>{{drawerPokemon.name}}</h2>
-            <h3>ID NUMBER: {{drawerPokemon.id}}</h3>
+            <h3>{{$t("homeDrawer.idNumber")}}: {{drawerPokemon.id}}</h3>
             <div class="mt-2rem">
                 <div style="margin-top:1rem;">
                     <p style="font-size: 48px;">{{drawerPokemon.base_experience}}</p>
-                    <p>Base Experience</p>
+                    <p>{{$t("homeDrawer.base_experience")}}</p>
                 </div>
             </div>
             <p class="mt-2rem" style="padding:0 10px">
-                <router-link style="color:white; font-size: 20px;" :to="getUrl(drawerPokemon.name)">Click to reach a page</router-link> 
-                that include more details about the pokemon.
+                <router-link style="color:white; font-size: 20px;" :to="getUrl(drawerPokemon.name)">{{$t("homeDrawer.clickArea")}}</router-link> 
+                {{$t("homeDrawer.subArea")}}
             </p>
             <div @click="closeNav" class="pointer mt-2 underline">
-                Close
+                {{$t("common.close")}}
             </div>
         </div>
     </div>
@@ -38,7 +38,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
             return `pokemon/${name}`
         }
         closeNav() {
-            var value = document.getElementById("mySidenav") as HTMLElement; 
+            const value: HTMLElement = document.getElementById("mySidenav"); 
             value.style.width = "0";
         }
     }
