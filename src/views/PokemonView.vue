@@ -57,18 +57,21 @@ import { Component, Vue } from 'vue-property-decorator';
             if(!auth.currentUser){
                 this.$router.push({name:"login"})
             }
-            const {data} = await axios.get(`https://pokeapi.co/api/v2/pokemon/`+this.$route.params.name);
-            this.pokemon = {
-                id: data.id,
-                name: data.name,
-                height: data.height,
-                weight: data.weight,
-                Img2: data.sprites.other["official-artwork"].front_default,
-                Img3: data.sprites.other.dream_world.front_default,
-                Img1: data.sprites.other.home.front_default,
-                base_experience: data.base_experience,
-                stats: data.stats,
-                moves: data.moves
+            try{
+                const {data} = await axios.get(`https://pokeapi.co/api/v2/pokemon/`+this.$route.params.name);
+                this.pokemon = {
+                    id: data.id,
+                    name: data.name,
+                    height: data.height,
+                    weight: data.weight,
+                    Img2: data.sprites.other["official-artwork"].front_default,
+                    Img3: data.sprites.other.dream_world.front_default,
+                    Img1: data.sprites.other.home.front_default,
+                    base_experience: data.base_experience,
+                    stats: data.stats,
+                    moves: data.moves
+            }}catch(err:any){
+                alert(`Hata Tanımı: ${err.message}\nBöyle bir pokemon yok!`);
             }
         }
     }

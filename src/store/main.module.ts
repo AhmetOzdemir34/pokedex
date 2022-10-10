@@ -36,7 +36,7 @@ export default class PokemonModule extends VuexModule {
     }
     @Mutation
     nameASC(){
-        this.filtered = this.pokemons.sort((a,b) => a.name.localeCompare(b.name))
+        this.filtered = this.pokemons.sort((a,b) => a.name.localeCompare(b.name));
     }
     @Mutation
     nameDESC(){

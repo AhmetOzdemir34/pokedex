@@ -61,7 +61,7 @@
     display: none;
     padding: 2rem;
     position: fixed;
-    top: 30%;
+    top: 15%;
     left: 50%;
     transform: translateX(-50%);
     background: #333;
@@ -86,12 +86,8 @@
 }
 @media(max-width:700px){
     #myModal{
-        width: 60%;
-    }
-}
-@media(max-width:500px){
-    #myModal{
-        width: 90%;
+        top: 20%;
+        width: 80%;
     }
 }
 </style>

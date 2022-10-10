@@ -6,8 +6,12 @@ export default {
         close:"Kapat",
         weight:"AGIRLIK",
         height:"BOY",
+<<<<<<< HEAD
         xp:"Deneyim",
         languageText:"Dil Değiştir"
+=======
+        xp:"Deneyim"
+>>>>>>> 8e909a1826d2e30fe8ace845ef4997028c1701c1
     },
     nav:{
         home:"anasayfa",
@@ -26,8 +30,12 @@ export default {
         favs:"Favs",
         withModal:"Modal ile",
         withDrawer:"Drawer ile",
+<<<<<<< HEAD
         withPage:"Başka Sayfa ile",
         newGroup:"Yeni Grup"
+=======
+        withPage:"Başka Sayfa ile"
+>>>>>>> 8e909a1826d2e30fe8ace845ef4997028c1701c1
     },
     homePokemons:{
         speciesResults:"Tür Sonuçları",

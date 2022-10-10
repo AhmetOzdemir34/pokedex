@@ -26,6 +26,7 @@ const app = firebase.initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
 new Vue({
+  i18n,
   router,
   i18n,
   store,
