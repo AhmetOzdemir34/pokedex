@@ -6,6 +6,7 @@ import * as firebase from 'firebase/app'
 import {getFirestore} from 'firebase/firestore'
 import { rtdbPlugin } from "vuefire";
 import { firestorePlugin } from 'vuefire'
+import {i18n} from './locales';
 
 Vue.use(firestorePlugin);
 Vue.use(rtdbPlugin);
@@ -26,6 +27,7 @@ export const db = getFirestore(app);
 
 new Vue({
   router,
+  i18n,
   store,
   render: h => h(App)
 }).$mount('#app')
