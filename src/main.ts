@@ -28,7 +28,6 @@ export const db = getFirestore(app);
 new Vue({
   i18n,
   router,
-  i18n,
   store,
   render: h => h(App)
 }).$mount('#app')

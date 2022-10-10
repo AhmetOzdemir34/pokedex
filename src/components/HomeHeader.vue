@@ -16,11 +16,7 @@
                 <tr>
                   <td>{{$t("homeHeader.filters.name")}}</td>
                   <td>{{$t("common.weight")}}</td>
-<<<<<<< HEAD
                   <td>{{$t("common.weight")}}</td>
-=======
-                  <td>{{$t("common.height")}}</td>
->>>>>>> 8e909a1826d2e30fe8ace845ef4997028c1701c1
                   <td>{{$t("homeHeader.filters.reset")}}</td>
                 </tr>
                 <tr>
