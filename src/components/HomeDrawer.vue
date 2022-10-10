@@ -7,11 +7,7 @@
             <div class="mt-2rem">
                 <div style="margin-top:1rem;">
                     <p style="font-size: 48px;">{{drawerPokemon.base_experience}}</p>
-<<<<<<< HEAD
                     <p>{{$t("homeDrawer.base_experience")}}</p>
-=======
-                    <p>{{$t("common.xp")}}</p>
->>>>>>> 8e909a1826d2e30fe8ace845ef4997028c1701c1
                 </div>
             </div>
             <p class="mt-2rem" style="padding:0 10px">

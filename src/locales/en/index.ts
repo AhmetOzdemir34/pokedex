@@ -6,12 +6,8 @@ export default {
         close:"Close",
         weight:"WEIGHT",
         height:"HEIGHT",
-<<<<<<< HEAD
         xp:"XP",
         languageText:"Change Language"
-=======
-        xp:"XP"
->>>>>>> 8e909a1826d2e30fe8ace845ef4997028c1701c1
     },
     nav:{
         home:"home",
@@ -30,12 +26,8 @@ export default {
         favs:"Favs",
         withModal:"with Modal",
         withDrawer:"with Drawer",
-<<<<<<< HEAD
         withPage:"with Page",
         newGroup:"New Group"
-=======
-        withPage:"with Page"
->>>>>>> 8e909a1826d2e30fe8ace845ef4997028c1701c1
     },
     homePokemons:{
         speciesResults:"Species Results",
