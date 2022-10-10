@@ -2,9 +2,14 @@
   <div id="app" style="min-height:100vh"
   :class="[getMode?'lightMode':'darkMode']">
     <nav class="container text-center py-2">
-      <router-link class="mx-2" :class="[getMode?'lightMode':'darkMode']" to="/">Home</router-link>
-      <router-link class="mx-2" :class="[getMode?'lightMode':'darkMode']" to="/favs">Favs</router-link>
-      <button class="mx-2" :class="{'light-text':!getMode}" @click="logout">Logout</button>
+      <router-link class="mx-2" :class="[getMode?'lightMode':'darkMode']" to="/">{{$t("nav.home")}}</router-link>
+      <router-link class="mx-2" :class="[getMode?'lightMode':'darkMode']" to="/favs">{{$t("nav.favs")}}</router-link>
+      <h2>{{getUserMail}}</h2>
+      <button class="mx-2" :class="{'light-text':!getMode}" @click="logout">{{$t("nav.logout")}}</button>
+      <select @change="changeLanguage">
+        <option :selected="getLocal('en')" value="en">🇺🇸 ENG</option>
+        <option :selected="getLocal('tr')" value="tr">🇹🇷 TUR</option>
+      </select>
       <button 
         class="fa-solid btn-mode"
         :class="[getMode ? 'fa-sun lightMode':'fa-moon darkMode']"
@@ -19,23 +24,34 @@
 <script lang="ts">
   import { getAuth, signOut } from '@firebase/auth';
   import { Component, Vue } from 'vue-property-decorator';  
+import { i18n } from './locales';
   import { mainStore } from "./store/main.module";
   
   @Component
   export default class extends Vue {
       
-
+    auth = getAuth();
     get getMode():boolean{
       return mainStore.lightMode;
     }
+    get getUserMail(){
+      return this.auth.currentUser?.email;
+      }
     toggle(){
       mainStore.toggleMode();
     }
+    changeLanguage(event:Event){
+      i18n.locale = event.target?.value;
+      localStorage.setItem('lang',event.target?.value);
+    }
     logout(){
-      const auth = getAuth();
-      signOut(auth).then(()=>{
+      signOut(getAuth()).then(()=>{
         this.$router.push({name:"login"});
       })
+    }
+    getLocal(data:string):boolean{
+      const result = localStorage.getItem('lang');
+      return result == data;
     }
   }
 </script>
