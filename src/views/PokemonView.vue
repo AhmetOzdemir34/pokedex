@@ -10,23 +10,23 @@
         <div id="part2">
             <div>
                 <p style="font-size: 48px;font-style: italic;">{{pokemon.height}}</p>
-                <p style="font-weight:bolder;">HEIGHT</p>
+                <p style="font-weight:bolder;">{{$t("common.height")}}</p>
             </div>
             <div>
                 <p style="font-size: 48px;font-style: italic;">{{pokemon.weight}}</p>
-                <p style="font-weight:bolder;">WEIGHT</p>
+                <p style="font-weight:bolder;">{{$t("common.weight")}}</p>
             </div>
             <div>
                 <p style="font-size: 48px;font-style: italic;">{{pokemon.base_experience}}</p>
-                <p style="font-weight:bolder;">BASE_EXP</p>
+                <p style="font-weight:bolder;">{{$t("common.xp")}}</p>
             </div>
         </div>
         <div id="part3">
-            <h3 class="moves">Moves</h3> <br>
+            <h3 class="moves">{{$t("pokemonView.moves")}}</h3> <br>
             <div class="move" v-for="move,i in pokemon.moves" :key="i">
                 {{move.move.name}}
             </div>
-            <h3 style="margin-top:4rem;">Stats</h3> <br>
+            <h3 style="margin-top:4rem;">{{$t("pokemonView.stats")}}</h3> <br>
             <table style="width:100%;">
                 <tbody>
                     <tr v-for="stat,i in pokemon.stats" :key="i">
@@ -53,7 +53,7 @@ import { Component, Vue } from 'vue-property-decorator';
         pokemon = {} as PokemonDetail;
 
         async created(){
-            const auth = getAuth();
+             const auth = getAuth();
             if(!auth.currentUser){
                 this.$router.push({name:"login"})
             }
