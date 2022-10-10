@@ -4,11 +4,18 @@
     <nav class="container text-center py-2">
       <router-link class="mx-2" :class="[getMode?'lightMode':'darkMode']" to="/">{{$t("nav.home")}}</router-link>
       <router-link class="mx-2" :class="[getMode?'lightMode':'darkMode']" to="/favs">{{$t("nav.favs")}}</router-link>
+<<<<<<< HEAD
       <h2>{{getUserMail}}</h2>
       <button class="mx-2" :class="{'light-text':!getMode}" @click="logout">{{$t("nav.logout")}}</button>
       <select @change="changeLanguage">
         <option :selected="getLocal('en')" value="en">🇺🇸 ENG</option>
         <option :selected="getLocal('tr')" value="tr">🇹🇷 TUR</option>
+=======
+      <button class="mx-2" :class="{'light-text':!getMode}" @click="logout">{{$t("nav.logout")}}</button>
+      <select @change="changeLanguage">
+        <option selected value="en">🇺🇸 ENG</option>
+        <option value="tr">🇹🇷 TUR</option>
+>>>>>>> 8e909a1826d2e30fe8ace845ef4997028c1701c1
       </select>
       <button 
         class="fa-solid btn-mode"
@@ -27,10 +34,11 @@
   import { Component, Vue } from 'vue-property-decorator';  
 import { i18n } from './locales';
   import { mainStore } from "./store/main.module";
-  
+  import {i18n} from './locales'
   @Component
   export default class extends Vue {
       
+<<<<<<< HEAD
     auth = getAuth();
     get getMode():boolean{
       return mainStore.lightMode;
@@ -38,6 +46,14 @@ import { i18n } from './locales';
     get getUserMail(){
       return this.auth.currentUser?.email;
       }
+=======
+    get getMode():boolean{
+      return mainStore.lightMode;
+    }
+    changeLanguage(event:any){
+      i18n.locale = event.target.value;
+    }
+>>>>>>> 8e909a1826d2e30fe8ace845ef4997028c1701c1
     toggle(){
       mainStore.toggleMode();
     }

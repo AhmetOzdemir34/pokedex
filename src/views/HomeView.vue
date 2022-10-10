@@ -21,6 +21,10 @@ import HomePokemons from "../components/HomePokemons.vue";
 })
 export default class HomeView extends Vue {
   
+<<<<<<< HEAD
+=======
+  auth = getAuth();
+>>>>>>> 8e909a1826d2e30fe8ace845ef4997028c1701c1
   created(){    
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
