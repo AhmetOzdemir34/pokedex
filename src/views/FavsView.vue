@@ -10,7 +10,7 @@
                             <img :src="item.imgUrl" :alt="item.name" class="image" />
                             <div>
                                 <p style="margin-top:14px;">{{item.name}}</p>
-                                <p class="delete-btn" @click="deleteIt(group.id, group.items, item.name)">Delete it!</p>
+                                <p class="delete-btn" @click="deleteIt(group.id, group.items, item.name)">{{$t("favsView.deleteIt")}}</p>
                             </div>
                         </div>
                     </div>
@@ -22,12 +22,11 @@
 
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
-    import { collection, getDocs, doc, updateDoc, deleteDoc } from "firebase/firestore";
+    import { collection, getDocs, doc, updateDoc, deleteDoc, DocumentData, QuerySnapshot } from "firebase/firestore";
     import { db } from '@/main';
     import { getAuth, onAuthStateChanged } from '@firebase/auth';
-import { mainStore } from '@/store/main.module';
+    import { mainStore } from '@/store/main.module';
 
-    
     @Component
     export default class  extends Vue {
         favsGroups: {
@@ -37,19 +36,19 @@ import { mainStore } from '@/store/main.module';
             items: {
                 name:string,
                 imgUrl:string
-            }[],
-            realItems?: any[]
+            }[]
         }[] = [];
-        auth = getAuth();
+    
         async created(){
-            onAuthStateChanged(this.auth, (user) => {
+            const auth = getAuth();
+            onAuthStateChanged(auth, (user) => {
                 if (!user) {
                     this.$router.push({name:'login'}) 
-                }
+                }   
             });
-            const querySnapshot : any = await getDocs(collection(db, "favourites"));
-            querySnapshot.forEach((doc:any) => {
-                if(this.auth.currentUser!.email === doc.data().owner){
+            const querySnapshot : QuerySnapshot<DocumentData> = await getDocs(collection(db, "favourites"));
+            querySnapshot.forEach(async (doc:DocumentData) => {
+                if(auth.currentUser?.email === doc.data().owner){
                     this.favsGroups.push({...doc.data(), id:doc.id});
                 }
             });
@@ -61,10 +60,16 @@ import { mainStore } from '@/store/main.module';
             await deleteDoc(doc(db, "favourites", id));
             this.favsGroups = this.favsGroups.filter((e)=> e.id!==id);
         }
-        async deleteIt(id:string, oldItems:any, name:string){
+        async deleteIt(
+            id:string, 
+            oldItems:{
+                name:string,
+                imgUrl:string
+            }[], 
+            name:string){
              const ref = doc(db, 'favourites', id);
             await updateDoc(ref, {
-                items: oldItems.filter((e:any) => e.name !== name),
+                items: oldItems.filter((e) => e.name !== name),
             }); 
             this.favsGroups.forEach(group =>{
                 if(group.id == id){

@@ -124,19 +124,22 @@ import { db } from '@/main';
                 }
             });
             if(mainStore.getPokemons.length===0){
-                
-                for(let i=1;i<=500;i++){
-                    const {data} = await axios.get('https://pokeapi.co/api/v2/pokemon/'+i);
-                    mainStore.addPokemons({
-                        id:data.id,
-                        name: data.name,
-                        height: data.height,
-                        weight: data.weight,
-                        base_experience: data.base_experience,
-                        imageUrl:data.sprites.other.dream_world.front_default,
-                        moves: data.moves,
-                        species: {name: data.species.name}
-                    });
+                try{
+                    for(let i=1;i<=500;i++){
+                        const {data} = await axios.get('https://pokeapi.co/api/v2/pokemon/'+i);
+                        mainStore.addPokemons({
+                            id:data.id,
+                            name: data.name,
+                            height: data.height,
+                            weight: data.weight,
+                            base_experience: data.base_experience,
+                            imageUrl:data.sprites.other.dream_world.front_default,
+                            moves: data.moves,
+                            species: {name: data.species.name}
+                        });
+                    }
+                }catch(err: any){
+                    alert(`Hata Tanımı: ${err.message}\nLütfen sayfayı yenileyiniz.`);
                 }
             }
         }

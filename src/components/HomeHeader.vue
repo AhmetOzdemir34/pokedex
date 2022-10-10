@@ -16,7 +16,11 @@
                 <tr>
                   <td>{{$t("homeHeader.filters.name")}}</td>
                   <td>{{$t("common.weight")}}</td>
+<<<<<<< HEAD
                   <td>{{$t("common.weight")}}</td>
+=======
+                  <td>{{$t("common.height")}}</td>
+>>>>>>> 8e909a1826d2e30fe8ace845ef4997028c1701c1
                   <td>{{$t("homeHeader.filters.reset")}}</td>
                 </tr>
                 <tr>
@@ -55,13 +59,17 @@
     export default class  extends Vue {
         search= "";
         results= [] as Pokemons[];
-        filtered = [] as Pokemons[];
 
         get getMode(){
           return mainStore.lightMode;
         }
+<<<<<<< HEAD
         get getPlaceholder():string|undefined{
           return String(this.$t("homeHeader.placeholder"));
+=======
+        get getPlaceholder():any{
+          return this.$t("homeHeader.placeholder");
+>>>>>>> 8e909a1826d2e30fe8ace845ef4997028c1701c1
         }
         clearMoves(){
           mainStore.clearMoves();
