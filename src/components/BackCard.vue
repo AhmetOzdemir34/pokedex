@@ -10,7 +10,6 @@
         </div>
         <div>
             <div class="dropdown">
-<<<<<<< HEAD
                 <div style="z-index: 2 !important;background-color: #333; color:white;" class="dropdown-content">
                     <select @change="addToExistGroup($event,pokemon)">
                         <option class="group" selected value="">---</option>
@@ -31,20 +30,6 @@
                     <router-link :to="getUrl(pokemon.name)">{{$t("backCard.withPage")}}</router-link>
                 </div>
                 <button class="btn">{{$t("backCard.details")}}</button>
-=======
-                <div style="z-index: 2 !important;" class="dropdown-content">
-                    <div @click="oModal(pokemon)">{{$t("backCard.withModal")}}</div>
-                    <div @click="oNav(pokemon)">{{$t("backCard.withDrawer")}}</div>
-                    <router-link :to="getUrl(pokemon.name)">{{$t("backCard.withPage")}}</router-link>
-                </div>
-                <button class="btn">{{$t("backCard.details")}}</button>
-            </div> <br/>
-            <div class="dropdown">
-                <div style="z-index: 2 !important;" class="dropdown-content">
-                   will appear Favs groups
-                </div>
-                <button class="btn">FAVS</button>
->>>>>>> 8e909a1826d2e30fe8ace845ef4997028c1701c1
             </div>
         </div>
     </div>
@@ -205,12 +190,8 @@
     color: white;
 }
 .btn{
-<<<<<<< HEAD
     width: 180px;
     display: block;
-=======
-    width: 120px;
->>>>>>> 8e909a1826d2e30fe8ace845ef4997028c1701c1
     padding: 10px;
     margin: 2px 0;
     border: 0;

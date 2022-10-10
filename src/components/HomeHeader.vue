@@ -63,13 +63,8 @@
         get getMode(){
           return mainStore.lightMode;
         }
-<<<<<<< HEAD
         get getPlaceholder():string|undefined{
           return String(this.$t("homeHeader.placeholder"));
-=======
-        get getPlaceholder():any{
-          return this.$t("homeHeader.placeholder");
->>>>>>> 8e909a1826d2e30fe8ace845ef4997028c1701c1
         }
         clearMoves(){
           mainStore.clearMoves();
