@@ -5,7 +5,7 @@
                 <div class="relative">
                     <div class="card">
                         <FrontCard :pokemon="pokemon"/>
-                        <BackCard  :pokemon="pokemon" :drawerPokemon="drawerPokemon" 
+                        <BackCard :favsGroup="favsGroups" :pokemon="pokemon" :drawerPokemon="drawerPokemon" 
                         :modalPokemon="modalPokemon" 
                         @oModal="openModal($event)" @oNav="openNav($event)"/>
                     </div>
@@ -18,7 +18,7 @@
                 <div class="relative">
                     <div class="card">
                         <FrontCard :pokemon="pokemon"/>
-                        <BackCard  :pokemon="pokemon" :drawerPokemon="drawerPokemon" 
+                        <BackCard :favsGroup="favsGroups" :pokemon="pokemon" :drawerPokemon="drawerPokemon" :auth="auth"
                         :modalPokemon="modalPokemon" 
                         @oModal="openModal($event)" @oNav="openNav($event)"/>
                     </div>
@@ -27,13 +27,13 @@
         </div>
         <div v-else>
             <div v-if="getSpecies.length>0">
-                <h2 class="text-center">Species Results</h2>
+                <h2 class="text-center">{{$t("homePokemons.speciesResults")}}</h2>
                 <div class="flex flex-row flex-wrap items-center">
                     <div v-for="pokemon,i in getSpecies" :key="i" class="pokemon-card">
                         <div class="relative">
                             <div class="card">
                                 <FrontCard :pokemon="pokemon"/>
-                                <BackCard  :pokemon="pokemon" :drawerPokemon="drawerPokemon" 
+                                <BackCard :favsGroup="favsGroups" :pokemon="pokemon" :drawerPokemon="drawerPokemon" :auth="auth"
                                 :modalPokemon="modalPokemon" 
                                 @oModal="openModal($event)" @oNav="openNav($event)"/>
                             </div>
@@ -42,13 +42,13 @@
                 </div>
             </div>
             <div v-if="getMoves.length>0">
-                <h2 class="text-center">Moves Results</h2>
+                <h2 class="text-center">{{$t("homePokemons.movesResults")}}</h2>
                 <div class="flex flex-row flex-wrap items-center">
                     <div v-for="pokemon,i in getMoves" :key="i" class="pokemon-card">
                         <div class="relative">
                             <div class="card">
                                 <FrontCard :pokemon="pokemon"/>
-                                <BackCard  :pokemon="pokemon" :drawerPokemon="drawerPokemon" 
+                                <BackCard :favsGroup="favsGroups" :pokemon="pokemon" :drawerPokemon="drawerPokemon" :auth="auth"
                                 :modalPokemon="modalPokemon" 
                                 @oModal="openModal($event)" @oNav="openNav($event)"/>
                             </div>
@@ -57,13 +57,13 @@
                 </div>
             </div>
             <div v-if="getResults.length>0">
-                <h2 class="text-center">Pokemon Results</h2>
+                <h2 class="text-center">{{$t("homePokemons.pokemonResults")}}</h2>
                 <div class="flex flex-row flex-wrap items-center">
                     <div v-for="pokemon,i in getResults" :key="i" class="pokemon-card">
                         <div class="relative">
                             <div class="card">
                                 <FrontCard :pokemon="pokemon"/>
-                                <BackCard  :pokemon="pokemon" :drawerPokemon="drawerPokemon" 
+                                <BackCard :favsGroup="favsGroups" :pokemon="pokemon" :drawerPokemon="drawerPokemon" :auth="auth"
                                 :modalPokemon="modalPokemon" 
                                 @oModal="openModal($event)" @oNav="openNav($event)"/>
                             </div>
@@ -91,6 +91,9 @@
     import HomeModal from './HomeModal.vue';
     import FrontCard from './FrontCard.vue';
     import BackCard from './BackCard.vue';
+import { getAuth } from '@firebase/auth';
+import { collection, DocumentData, getDocs, QuerySnapshot } from '@firebase/firestore';
+import { db } from '@/main';
     
     @Component({
         components:{
@@ -103,8 +106,23 @@
     export default class  extends Vue {
         modalPokemon = {} as Pokemons;
         drawerPokemon = {} as Pokemons;
-
+        favsGroups: {
+            id: string,
+            owner:string,
+            name:string,
+            items: {
+                name:string,
+                imgUrl:string
+            }[],
+        }[] = [];
+        auth = getAuth();
         async created(){
+            const querySnapshot : QuerySnapshot<DocumentData> = await getDocs(collection(db, "favourites"));
+            querySnapshot.forEach((doc:DocumentData) => {
+                if(this.auth.currentUser?.email === doc.data().owner){
+                    this.favsGroups.push({...doc.data(), id:doc.id});
+                }
+            });
             if(mainStore.getPokemons.length===0){
                 
                 for(let i=1;i<=500;i++){
