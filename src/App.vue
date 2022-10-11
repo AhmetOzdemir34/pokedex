@@ -17,7 +17,6 @@
         >
       </button>
     </nav>
-    {{ $t("message.hello") }}
     <router-view/>
   </div>
 </template>
@@ -42,9 +41,11 @@ import { i18n } from './locales';
       mainStore.toggleMode();
     }
     changeLanguage(event:Event){
-      i18n.locale = event.target?.value;
-      localStorage.setItem('lang',event.target?.value);
-    }
+        if(event.target){
+          i18n.locale = event.target.value;
+          localStorage.setItem('lang',event.target.value);
+        }
+      }
     logout(){
       signOut(getAuth()).then(()=>{
         this.$router.push({name:"login"});

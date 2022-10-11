@@ -19,12 +19,8 @@ import { Component, Vue } from 'vue-property-decorator';
         password= "";
 
         register(){
-            createUserWithEmailAndPassword(getAuth(), this.email, this.password)
-            .then((data)=>{
-                console.log(data);
-            }).catch(err =>{
-                alert(err.message);
-                
+            createUserWithEmailAndPassword(getAuth(), this.email, this.password).catch(err =>{
+                alert(err.message);    
             })
         }
         get getUsernamePlaceholder(): string | undefined{

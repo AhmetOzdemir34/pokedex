@@ -38,8 +38,10 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
             return `pokemon/${name}`
         }
         closeNav() {
-            const value: HTMLElement = document.getElementById("mySidenav"); 
+            const value : HTMLElement|null = document.getElementById("mySidenav"); 
+            if(value){
             value.style.width = "0";
+            }
         }
     }
 </script>
