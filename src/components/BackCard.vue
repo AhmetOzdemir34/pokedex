@@ -70,7 +70,7 @@
             var realDoc = "";
             const querySnapshot : QuerySnapshot<DocumentData> = await getDocs(collection(db, "favourites"));
             querySnapshot.forEach((doc:DocumentData) => {
-                if(event.target?.value === doc.data().name){
+                if((event.target as HTMLSelectElement).value === doc.data().name){
                     realDoc = doc.id;
                 }
             });
@@ -83,8 +83,10 @@
                         imgUrl: pokemon.imageUrl
                     })
                 });
-            }catch(err:Error){
-                alert(err.message);
+            }catch(err:Error|unknown){
+                if(err instanceof Error){
+                    alert(err.message);
+                }
             }
             
         }
@@ -103,10 +105,12 @@
             });
             this.favsGroup.push({
                 owner: this.auth.currentUser?.email,
-                name:this.groupName
+                name:this.groupName,
             });
-            }catch(err:Error){
-                alert("Grup oluşturma sırasında beklenmedik bir hata oluştu.\n"+err.message);
+            }catch(err:Error|unknown){
+                if(err instanceof Error){
+                    alert("Grup oluşturma sırasında beklenmedik bir hata oluştu.\n"+err.message);
+                }
             }
         }
         getUrl(name:string): string{

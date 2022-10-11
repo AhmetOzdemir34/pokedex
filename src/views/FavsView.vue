@@ -43,7 +43,11 @@
             const auth = getAuth();
             onAuthStateChanged(auth, (user) => {
                 if (!user) {
-                    this.$router.push({name:'login'}) 
+                    this.$router.push({name:'login'}).catch((err)=>{
+                        if(err.name != "NavigationDuplicated"){
+                            console.log(err.message);
+                        }
+                    })
                 }   
             });
             const querySnapshot : QuerySnapshot<DocumentData> = await getDocs(collection(db, "favourites"));

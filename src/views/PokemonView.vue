@@ -36,7 +36,6 @@
                     </tr>
                 </tbody>
             </table>
-            
         </div>
     </div>
     </div>
@@ -44,7 +43,7 @@
 
 <script lang="ts">
     import { PokemonDetail } from '@/types';
-import { getAuth } from '@firebase/auth';
+import { getAuth, onAuthStateChanged } from '@firebase/auth';
 import axios from 'axios';
 import { Component, Vue } from 'vue-property-decorator';
 
@@ -53,10 +52,16 @@ import { Component, Vue } from 'vue-property-decorator';
         pokemon = {} as PokemonDetail;
 
         async created(){
-             const auth = getAuth();
-            if(!auth.currentUser){
-                this.$router.push({name:"login"})
-            }
+            const auth = getAuth();
+            onAuthStateChanged(auth, (user) => {
+                if (!user) {
+                    this.$router.push({name:'login'}).catch((err)=>{
+                        if(err.name != "NavigationDuplicated"){
+                            console.log(err.message);
+                        }
+                    })
+                }   
+            });
             try{
                 const {data} = await axios.get(`https://pokeapi.co/api/v2/pokemon/`+this.$route.params.name);
                 this.pokemon = {
@@ -70,8 +75,11 @@ import { Component, Vue } from 'vue-property-decorator';
                     base_experience: data.base_experience,
                     stats: data.stats,
                     moves: data.moves
-            }}catch(err:any){
-                alert(`Hata Tanımı: ${err.message}\nBöyle bir pokemon yok!`);
+            }}
+            catch(err:Error | unknown){
+                if(err instanceof Error){
+                    alert(`Hata Tanımı: ${err.message}\nBöyle bir pokemon yok!`);
+                }
             }
         }
     }

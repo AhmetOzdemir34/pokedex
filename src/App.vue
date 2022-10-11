@@ -29,7 +29,7 @@ import { i18n } from './locales';
   
   @Component
   export default class extends Vue {
-      
+          
     auth = getAuth();
     get getMode():boolean{
       return mainStore.lightMode;
@@ -40,11 +40,10 @@ import { i18n } from './locales';
     toggle(){
       mainStore.toggleMode();
     }
-    changeLanguage(event:Event){
-        if(event.target){
-          i18n.locale = event.target.value;
-          localStorage.setItem('lang',event.target.value);
-        }
+    changeLanguage(event: Event){
+          i18n.locale = (event.target as HTMLSelectElement).value;
+          localStorage.setItem('lang', (event.target as HTMLSelectElement).value);
+        
       }
     logout(){
       signOut(getAuth()).then(()=>{

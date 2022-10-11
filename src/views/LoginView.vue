@@ -12,9 +12,9 @@
 
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
-    import { getAuth, onAuthStateChanged } from "firebase/auth";
     import RegisterPart from '@/components/RegisterPart.vue';
     import LoginPart from '../components/LoginPart.vue';
+import { getAuth, onAuthStateChanged } from '@firebase/auth';
 
     @Component({
         components:{RegisterPart,LoginPart}
@@ -23,22 +23,22 @@
         email= "";
         password= "";
         toggleExpression = true;
+
         auth = getAuth();
         created(){
             onAuthStateChanged(this.auth, (user) => {
                 if (user) {
-                    this.$router.push({name:'home'}) 
-                }
+                    this.$router.push({name:'home'}).catch((err)=>{
+                        if(err.name != "NavigationDuplicated"){
+                            console.log(err.message);
+                        }
+                    })
+                }   
             });
         }
+
         toggle(){
             this.toggleExpression = !this.toggleExpression;
-        }
-        get getUsernamePlaceholder():any{
-            return this.$t("loginView.username");
-        }
-        get getPasswordPlaceholder():any{
-            return this.$t("loginView.password");
         }
     }
 </script>
