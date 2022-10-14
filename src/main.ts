@@ -13,7 +13,7 @@ Vue.use(rtdbPlugin);
 
 Vue.config.productionTip = false
 
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: "AIzaSyDqY3LMiIXzyuidexm8jEPnPZ2KE-fmQno",
   authDomain: "pokedex-e11ea.firebaseapp.com",
   projectId: "pokedex-e11ea",

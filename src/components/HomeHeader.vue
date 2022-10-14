@@ -16,12 +16,12 @@
                 <tr>
                   <td>{{$t("homeHeader.filters.name")}}</td>
                   <td>{{$t("common.weight")}}</td>
-                  <td>{{$t("common.weight")}}</td>
+                  <td>{{$t("common.height")}}</td>
                   <td>{{$t("homeHeader.filters.reset")}}</td>
                 </tr>
                 <tr>
                   <td>
-                    <button @click="nameASC" :class="[getMode?'lightModeLocal':'darkModeLocal']" class="order-icons fa-solid fa-arrow-down-a-z mx-1"></button>
+                    <button @click="nameASC" data-test="nameASC" :class="[getMode?'lightModeLocal':'darkModeLocal']" class="order-icons fa-solid fa-arrow-down-a-z mx-1"></button>
                     <button @click="nameDESC" :class="[getMode?'lightModeLocal':'darkModeLocal']" class="order-icons fa-solid fa-arrow-down-z-a mx-1"></button>
                   </td>
                   <td>
@@ -47,14 +47,11 @@
     import { mainStore } from '@/store/main.module';
     import { Pokemons } from '@/types';
     import { Component, Vue } from 'vue-property-decorator';
-    import HomePokemons from './HomePokemons.vue';
 
-    @Component({
-      components: {HomePokemons}
-    })
+    @Component
     export default class  extends Vue {
         search= "";
-        results= [] as Pokemons[];
+        results: Pokemons[] = [];
 
         get getMode(){
           return mainStore.lightMode;

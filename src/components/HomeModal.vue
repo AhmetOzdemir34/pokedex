@@ -1,5 +1,5 @@
 <template>
-    <div id="myModal" class="text-center">
+    <div id="myModal" class="text-center" style="display: none;">
         <img :src="modalPokemon.imageUrl" :alt="modalPokemon.name" class="pokemon-image">
         <h2>{{modalPokemon.name}} #{{modalPokemon.id}}</h2>
         <div class="flex flex-row flex-nowrap justify-beetween items-center">
@@ -20,7 +20,7 @@
             <button @click="previousEmit(modalPokemon.id)" class="btn-modal fa-solid fa-chevron-left"></button>
             <button @click="nextEmit(modalPokemon.id)" class="btn-modal fa-solid fa-chevron-right"></button>
         </div>
-        <div @click="closeModal" class="pointer">
+        <div @click="closeModal" data-test="closeBtn" class="pointer">
             {{$t("common.close")}}
         </div>
     </div>
@@ -38,6 +38,8 @@
         closeModal() {
             var value = document.getElementById("myModal") as HTMLElement; 
             value.style.display = "none";
+            console.log("tıkladın");
+            
         }
         previousEmit(id:number){
             this.$emit("previousX",id);
@@ -58,7 +60,6 @@
     border-radius: 10px;
 }
 #myModal{
-    display: none;
     padding: 2rem;
     position: fixed;
     top: 15%;

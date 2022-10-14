@@ -2,8 +2,8 @@
     <div>
             <h2 class="text-center">{{$t("loginView.register")}}</h2>
             <div class="inputs">
-                <input type="text" v-model="email" class="inps" :placeholder="getUsernamePlaceholder" />
-                <input type="password" v-model="password" class="inps" :placeholder="getPasswordPlaceholder" />
+                <input type="text" v-model="email" class="inps inps3" :placeholder="getUsernamePlaceholder" />
+                <input type="password" v-model="password" class="inps inps4" :placeholder="getPasswordPlaceholder" />
                 <button type="button" class="btn" @click="register">{{$t("loginView.registerButton")}}</button>
             </div>
     </div>
@@ -19,7 +19,7 @@ import { Component, Vue } from 'vue-property-decorator';
         password= "";
 
         register(){
-            createUserWithEmailAndPassword(getAuth(), this.email, this.password).catch(err =>{
+            createUserWithEmailAndPassword(getAuth(), this.email, this.password).then((data)=>console.log(data)).catch(err =>{
                 alert(err.message);    
             })
         }

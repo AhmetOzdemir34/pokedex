@@ -10,7 +10,7 @@ import { store } from "./index";
 })
 export default class PokemonModule extends VuexModule {
     pokemons: Pokemons[] = []
-    lightMode = true as boolean
+    lightMode = true;
     results: Pokemons[] = [] //pokemon results
     moves: Pokemons[] = [] // moves results
     species: Pokemons[] = []

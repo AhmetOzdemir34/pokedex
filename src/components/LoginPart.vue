@@ -2,8 +2,8 @@
     <div>
         <h2 class="text-center">{{$t("loginView.login")}}</h2>
         <div class="inputs">
-            <input type="text" v-model="email" class="inps" :placeholder="getUsernamePlaceholder" />
-            <input type="password" v-model="password" class="inps" :placeholder="getPasswordPlaceholder" />
+            <input type="text" v-model="email" class="inps inps1" :placeholder="getUsernamePlaceholder" />
+            <input type="password" v-model="password" class="inps inps2" :placeholder="getPasswordPlaceholder" />
             <button type="button" class="btn" @click="signIn">{{$t("loginView.loginButton")}}</button>
         </div>
     </div>

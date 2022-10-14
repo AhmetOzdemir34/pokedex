@@ -138,8 +138,10 @@ import { db } from '@/main';
                             species: {name: data.species.name}
                         });
                     }
-                }catch(err: any){
-                    alert(`Hata Tanımı: ${err.message}\nLütfen sayfayı yenileyiniz.`);
+                }catch(err: Error | unknown){
+                    if(err instanceof Error){
+                        alert(`Hata Tanımı: ${err.message}\nLütfen sayfayı yenileyiniz.`);
+                    }
                 }
             }
         }

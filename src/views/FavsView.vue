@@ -6,13 +6,13 @@
                     <h2 :class="[getMode?'lightModeLocal':'darkModeLocal']">{{group.name}} <span class="delete-btn" @click="deleteGroup(group.id)"><i class="fa-sharp fa-solid fa-trash"></i></span></h2>
                     <hr style="margin:12px 0;" />
                     <div v-if="group.items.length>0" class="card-keeper">
-                        <div v-for="item,i in group.items" :key="i" class="item">
-                            <img :src="item.imgUrl" :alt="item.name" class="image" />
-                            <div>
-                                <p style="margin-top:14px;">{{item.name}}</p>
-                                <p class="delete-btn" @click="deleteIt(group.id, group.items, item.name)">{{$t("favsView.deleteIt")}}</p>
+                            <div  v-for="item,i in group.items" :key="i" class="item">
+                                <img :src="item.imgUrl" :alt="item.name" class="image" />
+                                <div>
+                                    <p style="margin-top:14px;">{{item.name}}</p>
+                                    <p class="delete-btn" @click="deleteIt(group.id, group.items, item.name)">{{$t("favsView.deleteIt")}}</p>
+                                </div>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>

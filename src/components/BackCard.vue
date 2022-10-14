@@ -68,24 +68,26 @@
 
         async addToExistGroup(event:Event,pokemon:Pokemons){
             var realDoc = "";
-            const querySnapshot : QuerySnapshot<DocumentData> = await getDocs(collection(db, "favourites"));
-            querySnapshot.forEach((doc:DocumentData) => {
-                if((event.target as HTMLSelectElement).value === doc.data().name){
-                    realDoc = doc.id;
-                }
-            });
             try{
+                const querySnapshot : QuerySnapshot<DocumentData> = await getDocs(collection(db, "favourites"));
+                querySnapshot.forEach((doc:DocumentData) => {
+                    if((event.target as HTMLSelectElement).value === doc.data().name){
+                        realDoc = doc.id;
+                    }
+                });
                 const ref = doc(db, "favourites", realDoc);
 
-                await updateDoc(ref, {
+                const docx : any = await updateDoc(ref, {
                     items: arrayUnion({
                         name:pokemon.name,
                         imgUrl: pokemon.imageUrl
                     })
                 });
-            }catch(err:Error|unknown){
+                console.log(docx);
+                alert(`${pokemon.name}, ${docx} grubuna eklendi.`);
+            }catch(err:Error | unknown){
                 if(err instanceof Error){
-                    alert(err.message);
+                    alert(err.message); 
                 }
             }
             
@@ -95,18 +97,19 @@
                 return alert("Boş grup adı veya varolan bir grup adı girilemez.");
             }
             try{
-            await setDoc(doc(db, "favourites", nanoid()), {
-                name: this.groupName,
-                owner: this.auth.currentUser?.email,
-                items: [{
-                    name:pokemon.name,
-                    imgUrl: pokemon.imageUrl 
-                }]
-            });
-            this.favsGroup.push({
-                owner: this.auth.currentUser?.email,
-                name:this.groupName,
-            });
+                await setDoc(doc(db, "favourites", nanoid()), {
+                    name: this.groupName,
+                    owner: this.auth.currentUser?.email,
+                    items: [{
+                        name:pokemon.name,
+                        imgUrl: pokemon.imageUrl 
+                    }]
+                });
+                this.favsGroup.push({
+                    owner: this.auth.currentUser?.email,
+                    name:this.groupName,
+                });
+                alert(`${this.groupName} grubu oluşturuldu ve ${pokemon.name} pokemonu gruba eklendi.`);
             }catch(err:Error|unknown){
                 if(err instanceof Error){
                     alert("Grup oluşturma sırasında beklenmedik bir hata oluştu.\n"+err.message);

@@ -11,7 +11,7 @@
                 </div>
             </div>
             <p class="mt-2rem" style="padding:0 10px">
-                <router-link style="color:white; font-size: 20px;" :to="getUrl(drawerPokemon.name)">{{$t("homeDrawer.clickArea")}}</router-link> 
+                <router-link style="color:white; font-size: 20px;" data-test="router-link" :to="getUrl(drawerPokemon.name)">{{$t("homeDrawer.clickArea")}}</router-link> 
                 {{$t("homeDrawer.subArea")}}
             </p>
             <div @click="closeNav" class="pointer mt-2 underline">
@@ -23,8 +23,8 @@
 
 <script lang="ts">
     import { mainStore } from '@/store/main.module';
-import { Pokemons } from '@/types';
-import { Component, Prop, Vue } from 'vue-property-decorator';
+    import { Pokemons } from '@/types';
+    import { Component, Prop, Vue } from 'vue-property-decorator';
 
     @Component
     export default class  extends Vue {
@@ -40,7 +40,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
         closeNav() {
             const value : HTMLElement|null = document.getElementById("mySidenav"); 
             if(value){
-            value.style.width = "0";
+                value.style.width = "0";
             }
         }
     }

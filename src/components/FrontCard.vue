@@ -8,8 +8,8 @@
 
 <script lang="ts">
     import { mainStore } from '@/store/main.module';
-import { Pokemons } from '@/types';
-import { Component, Prop, Vue } from 'vue-property-decorator';
+    import { Pokemons } from '@/types';
+    import { Component, Prop, Vue } from 'vue-property-decorator';
 
     @Component
     export default class  extends Vue {
